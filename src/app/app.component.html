@@ -1,0 +1,68 @@
+<input type="text"  placeholder="Search By Name" value="name" [(ngModel)]="nameValue">
+<button (click)="search(nameValue)" class="btn btn-primary">Search</button>
+<div *ngIf="Searched">
+<h2>Search Result</h2>
+<table class="table table-hover" >
+  <thead>
+    <tr>
+      <th scope="col">Image</th>
+      <th scope="col">Abv</th>
+      <th scope="col">Ibv</th>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Style</th>
+      <th scope="col">Ounces</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img src="{{resultImage | custompipe:resultId}}" /></td>
+      <td>{{resultAbv}}</td>
+      <td>{{resultIbv}}</td>
+      <td>{{resultId}}</td>
+      <td>{{resultName}}</td>
+      <td>{{resultStyle}}</td>
+      <td>{{resultOunces}}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+<!-- List of all elements-->
+<div *ngIf="notSearched">
+<table class="table table-hover" >
+  <thead>
+    <tr>
+      <th scope="col">Image</th>
+      <th scope="col">Abv</th>
+      <th scope="col">Ibv</th>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Style</th>
+      <th scope="col">Ounces</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of data | paginate:{id:'listing_pagination',
+    itemsPerPage:20,
+    currentPage:page,
+    totalItems:totalRecords}">
+
+    
+      <!--<td *ngFor="let pic of collection; let num=index">
+        <img *ngIf="num==2;else other_content" class="img" src="{{pic.image}}" alt="..." (click)="checkNum(num)" ></td>-->
+      
+      <td><img src="{{user.image | custompipe:user.id}}" /></td>
+      <td>{{user.abv}}</td>
+      <td>{{user.ibv}}</td>
+      <td>{{user.id}}</td>
+      <td>{{user.name}}</td>
+      <td>{{user.style}}</td>
+      <td>{{user.ounces}}</td>
+    </tr>
+  </tbody>
+</table>
+<div class="ngx-pagination">
+  <pagination-controls id="listing_pagination" maxSize="5" directionLinks="true" (pageChange)="page=$event"></pagination-controls>
+</div></div>
